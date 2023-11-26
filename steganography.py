@@ -12,17 +12,7 @@ import math
 bgColor = "#3d6466"
 buttonColor = "#28293a"
 
-global d
-global c
-d = {}
-c = {}
-for i in range(255):
-    d[chr(i)] = i
-    c[i] = chr(i)
-
 files = {}
-flag = None
-
 
 def showImage1():
     global fileName
@@ -279,4 +269,3 @@ inputFrame = tk.Frame(root,
                       relief="groove",
                       bd=4).place(x=20,y=390)
 root.mainloop()
-
