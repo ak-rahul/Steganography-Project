@@ -1,6 +1,6 @@
 {
-  "stego_new.png": {
-    "original": "C:/Users/RAHUL/Pictures/Screenshots/new.png",
-    "passworded": true
+  "stego_demo-image1.png": {
+    "original": "C:/Users/RAHUL/Downloads/demo-image1.png",
+    "password_used": true
   }
 }
