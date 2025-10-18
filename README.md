@@ -1,19 +1,25 @@
-# Steganography v2 (PyQt6)
+# 🧬 SteganoX — Next-Gen Steganography Suite (PyQt6)
+
+A fully modern, secure, and user-friendly steganography application built with **Python + PyQt6**, supporting AES-256 encryption and self-contained stego images.
 
 ---
 
-Features:
-- Embeds compressed payload into image LSBs.
-- Optional password (SHA256-derived XOR) for payload.
-- Embedded header: allows self-contained decrypt without in-memory maps.
-- Fallback attempt for legacy images (best-effort).
-- Persistent metadata (files.json).
-- Capacity checks and friendly UI.
+## 🚀 Features
+- 🔐 AES-256-GCM encryption (military-grade security)
+- 🗜️ Automatic zlib compression (compact payloads)
+- 🧱 Self-contained binary header format
+- 💾 Persistent metadata tracking (`files.json`)
+- 💡 Capacity checking and error handling
+- 🖼️ Beautiful PyQt6 interface with progress + preview
+- 🕹️ Backward compatibility with legacy decoding
 
-Run:
-1. pip install -r requirements.txt
-2. python main.py
+---
 
-Notes:
-- Use PNG for lossless storage. JPEG may destroy LSBs (avoid for encrypted images).
-- If you encrypted with the older Tkinter app, use "Decrypt" and select that file; app will try legacy fallback.
+## 🧩 Installation
+
+```bash
+git clone https://github.com/<yourname>/SteganoX.git
+cd SteganoX
+pip install -r requirements.txt
+python main.py
+```
