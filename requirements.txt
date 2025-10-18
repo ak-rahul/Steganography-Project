@@ -1,0 +1,4 @@
+PyQt6==6.6.0
+opencv-python
+Pillow
+numpy
