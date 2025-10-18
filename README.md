@@ -18,7 +18,7 @@ A fully modern, secure, and user-friendly steganography application built with *
 ## 🧩 Installation
 
 ```bash
-git clone https://github.com/ak-rahul/SteganoX.git
+git clone https://github.com/ak-rahul/Steganography-Project.git
 cd SteganoX
 pip install -r requirements.txt
 python main.py
