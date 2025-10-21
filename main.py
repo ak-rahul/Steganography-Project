@@ -1,13 +1,21 @@
-# main.py
+"""
+Steganography Pro - Advanced Image Steganography Tool
+Main entry point for the application
+"""
+
 import sys
-from PyQt6.QtWidgets import QApplication
-from ui.main_window import MainWindow
+from gui.main_window import MainWindow
+
 
 def main():
-    app = QApplication(sys.argv)
-    w = MainWindow()
-    w.show()
-    sys.exit(app.exec())
+    """Initialize and run the application"""
+    try:
+        app = MainWindow()
+        app.run()
+    except Exception as e:
+        print(f"Error starting application: {e}", file=sys.stderr)
+        sys.exit(1)
+
 
 if __name__ == "__main__":
     main()
