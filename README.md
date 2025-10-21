@@ -17,7 +17,7 @@ Hide secret messages inside images with military-grade encryption
 
 ## 📖 Overview
 
-**Steganography Pro** is a modern, feature-rich desktop application for hiding secret messages inside images using advanced steganographic techniques. Built with Python and PyQt6, it features a beautiful Windows 11 Fluent Design interface and implements multiple steganography algorithms with AES-256 encryption for maximum security.
+**Steganography-Project** is a modern, feature-rich desktop application for hiding secret messages inside images using advanced steganographic techniques. Built with Python and PyQt6, it features a beautiful Windows 11 Fluent Design interface and implements multiple steganography algorithms with AES-256 encryption for maximum security.
 
 ### What is Steganography?
 
@@ -81,8 +81,8 @@ Steganography is the practice of concealing information within another file, mes
 
 #### Clone the repository
 ```
-git clone https://github.com/yourusername/steganography-pro.git
-cd steganography-pro
+git clone https://github.com/ak-rahul/Steganography-Project.git
+cd Steganography-Project
 ```
 
 #### Install dependencies
