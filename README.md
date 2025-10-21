@@ -1,4 +1,4 @@
-# 🔐 Steganography Pro
+# 🔐 Steganography-Project
 
 ![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.8+-green.svg)
