@@ -1,5 +1,6 @@
-opencv-python 
-Pillow 
-numpy 
-cryptography
-setuptools
+PyQt6==6.6.1
+opencv-python==4.8.1.78
+Pillow==10.1.0
+numpy==1.24.3
+cryptography==41.0.7
+scipy==1.11.4

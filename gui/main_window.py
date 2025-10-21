@@ -1,103 +1,120 @@
-"""Main application window - Standard Tkinter version"""
+"""Main Window - Windows 11 Style"""
 
-import tkinter as tk
-from tkinter import ttk
-from config import APP_NAME, APP_VERSION, WINDOW_WIDTH, WINDOW_HEIGHT
-from gui.encrypt_tab import EncryptTab
-from gui.decrypt_tab import DecryptTab
+from PyQt6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
+                              QStackedWidget, QListWidget, QLabel, QStatusBar, 
+                              QFrame, QListWidgetItem)
+from PyQt6.QtCore import Qt, QSize
+from PyQt6.QtGui import QFont
+
+from gui.encrypt_widget import EncryptWidget
+from gui.decrypt_widget import DecryptWidget
+from gui.analysis_widget import AnalysisWidget
+from gui.batch_widget import BatchWidget
+from config import *
 
 
-class MainWindow:
-    """Main application window"""
+class MainWindow(QMainWindow):
+    """Main Application Window"""
     
     def __init__(self):
-        self.root = tk.Tk()
-        self.root.title(f"{APP_NAME} v{APP_VERSION}")
-        self.root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
-        
-        # Dark theme colors
-        self.bg_color = "#1e1e2e"
-        self.fg_color = "#cdd6f4"
-        self.accent_color = "#89b4fa"
-        
-        self.root.configure(bg=self.bg_color)
-        
-        # Center window
-        self.position_center()
-        
-        # Create UI
-        self.create_widgets()
+        super().__init__()
+        self.setWindowTitle(f"{APP_NAME} {APP_VERSION}")
+        self.setGeometry(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT)
+        self.center_window()
+        self.setup_ui()
     
-    def position_center(self):
+    def center_window(self):
         """Center window on screen"""
-        self.root.update_idletasks()
-        width = WINDOW_WIDTH
-        height = WINDOW_HEIGHT
-        x = (self.root.winfo_screenwidth() // 2) - (width // 2)
-        y = (self.root.winfo_screenheight() // 2) - (height // 2)
-        self.root.geometry(f'{width}x{height}+{x}+{y}')
+        screen = self.screen().geometry()
+        x = (screen.width() - WINDOW_WIDTH) // 2
+        y = (screen.height() - WINDOW_HEIGHT) // 2
+        self.move(x, y)
     
-    def create_widgets(self):
-        """Create main window widgets"""
+    def setup_ui(self):
+        """Setup the main UI"""
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
         
-        # Header frame
-        header_frame = tk.Frame(self.root, bg="#313244", height=100)
-        header_frame.pack(fill=tk.X, pady=0)
-        header_frame.pack_propagate(False)
+        main_layout = QVBoxLayout(central_widget)
+        main_layout.setContentsMargins(0, 0, 0, 0)
+        main_layout.setSpacing(0)
         
-        tk.Label(
-            header_frame,
-            text=APP_NAME,
-            font=('Segoe UI', 24, 'bold'),
-            bg="#313244",
-            fg=self.fg_color
-        ).pack(pady=15)
+        # Header
+        header = self.create_header()
+        main_layout.addWidget(header)
         
-        tk.Label(
-            header_frame,
-            text="Hide and reveal secret messages in images using steganography",
-            font=('Segoe UI', 10),
-            bg="#313244",
-            fg="#a6adc8"
-        ).pack()
+        # Content area
+        content_layout = QHBoxLayout()
+        content_layout.setContentsMargins(0, 0, 0, 0)
+        content_layout.setSpacing(0)
         
-        # Notebook for tabs
-        style = ttk.Style()
-        style.theme_use('clam')
+        # Sidebar
+        self.sidebar = self.create_sidebar()
+        content_layout.addWidget(self.sidebar)
         
-        # Configure tab colors
-        style.configure('TNotebook', background=self.bg_color, borderwidth=0)
-        style.configure('TNotebook.Tab', 
-                       background='#313244', 
-                       foreground=self.fg_color,
-                       padding=[20, 10],
-                       font=('Segoe UI', 10, 'bold'))
-        style.map('TNotebook.Tab',
-                 background=[('selected', self.accent_color)],
-                 foreground=[('selected', '#000000')])
+        # Pages
+        self.pages = QStackedWidget()
+        self.pages.setStyleSheet("QStackedWidget { background-color: #F3F3F3; }")
         
-        self.notebook = ttk.Notebook(self.root)
-        self.notebook.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        self.pages.addWidget(EncryptWidget())
+        self.pages.addWidget(DecryptWidget())
+        self.pages.addWidget(AnalysisWidget())
+        self.pages.addWidget(BatchWidget())
         
-        # Create tabs
-        self.encrypt_tab = EncryptTab(self.notebook, self.bg_color, self.fg_color)
-        self.decrypt_tab = DecryptTab(self.notebook, self.bg_color, self.fg_color)
+        content_layout.addWidget(self.pages, 1)
+        main_layout.addLayout(content_layout)
         
-        self.notebook.add(self.encrypt_tab, text="  Encrypt Message  ")
-        self.notebook.add(self.decrypt_tab, text="  Decrypt Message  ")
+        # Status bar
+        status_bar = QStatusBar()
+        status_bar.showMessage(f"Ready • {APP_NAME} v{APP_VERSION}")
+        self.setStatusBar(status_bar)
         
-        # Footer
-        footer_frame = tk.Frame(self.root, bg="#313244", height=30)
-        footer_frame.pack(fill=tk.X, side=tk.BOTTOM)
-        
-        tk.Label(
-            footer_frame,
-            text=f"Version {APP_VERSION} | LSB Steganography with AES Encryption",
-            font=('Segoe UI', 8),
-            bg="#313244",
-            fg="#6c7086"
-        ).pack(pady=5)
+        self.sidebar.currentRowChanged.connect(self.pages.setCurrentIndex)
     
-    def run(self):
-        """Run the application"""
-        self.root.mainloop()
+    def create_header(self):
+        """Create header"""
+        header = QFrame()
+        header.setStyleSheet("""
+            QFrame {
+                background-color: #FAFAFA;
+                border-bottom: 1px solid #E5E5E5;
+            }
+        """)
+        header.setFixedHeight(70)
+        
+        layout = QHBoxLayout(header)
+        layout.setContentsMargins(30, 10, 30, 10)
+        
+        title_label = QLabel(f"🔐 {APP_NAME}")
+        title_label.setFont(QFont("Segoe UI", 24, QFont.Weight.Bold))
+        layout.addWidget(title_label)
+        
+        layout.addStretch()
+        
+        subtitle = QLabel("Advanced Image Steganography")
+        subtitle.setObjectName("bodyLabel")
+        subtitle.setFont(QFont("Segoe UI", 12))
+        layout.addWidget(subtitle)
+        
+        return header
+    
+    def create_sidebar(self):
+        """Create sidebar navigation"""
+        sidebar = QListWidget()
+        sidebar.setFixedWidth(240)
+        
+        items = [
+            "🔒  Encrypt Message",
+            "🔓  Decrypt Message",
+            "🔍  Steganalysis",
+            "📦  Batch Processing"
+        ]
+        
+        for title in items:
+            item = QListWidgetItem(title)
+            item.setFont(QFont("Segoe UI", 13))
+            item.setSizeHint(QSize(220, 50))
+            sidebar.addItem(item)
+        
+        sidebar.setCurrentRow(0)
+        return sidebar
